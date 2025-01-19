@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h2>Service Requests</h2>
+
+{% if requests %}
+    <ul>
+    {% for req in requests %}
+        <li>
+            <a href="{% url 'service_requests:request_detail' req.id %}">
+                {{ req.request_type }} (#{{ req.id }}) - {{ req.get_status_display }}
+            </a>
+            <em>Created at {{ req.created_at }}</em>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No service requests yet.</p>
+{% endif %}
+<a href="{% url 'service_requests:request_create' %}">Create New Request</a>
+{% endblock %}

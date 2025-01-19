@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h2>Service Request Details</h2>
+<p><strong>Type:</strong> {{ request_obj.request_type }}</p>
+<p><strong>Description:</strong> {{ request_obj.description }}</p>
+<p><strong>Status:</strong> {{ request_obj.get_status_display }}</p>
+<p><strong>Created:</strong> {{ request_obj.created_at }}</p>
+
+{% if request_obj.attachment %}
+    <p><strong>Attachment:</strong> <a href="{{ request_obj.attachment.url }}">Download</a></p>
+{% endif %}
+
+{% if user.is_staff or request_obj.user == user %}
+    <a href="{% url 'service_requests:request_update' request_obj.id %}">Edit Request</a>
+{% endif %}
+{% endblock %}

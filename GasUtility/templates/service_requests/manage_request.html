@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h2>Manage Service Requests</h2>
+
+<ul>
+{% for req in requests %}
+    <li>
+        <strong>#{{ req.id }}:</strong> {{ req.request_type }}
+        ({{ req.get_status_display }}, created at {{ req.created_at }})
+        <form method="post" style="display:inline;">
+            {% csrf_token %}
+            <input type="hidden" name="sr_id" value="{{ req.id }}">
+            <button name="action" value="in_progress">In Progress</button>
+            <button name="action" value="resolved">Resolved</button>
+            <button name="action" value="closed">Closed</button>
+        </form>
+    </li>
+{% endfor %}
+</ul>
+{% endblock %}
